@@ -103,5 +103,20 @@
     "pl": "Homey może teraz nasłuchiwać prawdziwych pilotów: włącz „Nasłuchuj prawdziwego pilota” w urządzeniu, a nowa karta flow uruchomi się po naciśnięciu przycisku na samym pilocie. Sterowanie Homey nadąża, więc pozycja markizy się zgadza.",
     "ko": "이제 Homey가 실제 리모컨 신호를 들을 수 있습니다. 기기에서 \"실제 리모컨 신호 듣기\"를 켜면 리모컨 자체에서 버튼을 누를 때 새 플로우 카드가 실행됩니다. Homey 컨트롤도 함께 갱신되어 차양 위치가 정확하게 유지됩니다.",
     "ar": "يستطيع Homey الآن الاستماع إلى أجهزة التحكم الحقيقية: فعّل \"الاستماع إلى جهاز التحكم الحقيقي\" في جهاز، فتبدأ بطاقة تدفق جديدة عند الضغط على زر في جهاز التحكم نفسه. وتتحدّث عناصر تحكم Homey تبعًا لذلك فيبقى موضع المظلة صحيحًا."
+  },
+  "1.5.0": {
+    "en": "Two new fixed-code protocols from the Unleashed firmware: Telcoma/Cardin EDGE (gates) and Doorbell32 (wireless doorbells). Listen also recognises Doorbell32 and no longer mistakes remotes it cannot decode for another protocol.",
+    "nl": "Twee nieuwe protocollen met vaste code uit de Unleashed-firmware: Telcoma/Cardin EDGE (poorten) en Doorbell32 (draadloze deurbellen). Luisteren herkent ook Doorbell32 en ziet afstandsbedieningen die het niet kan decoderen niet langer aan voor een ander protocol.",
+    "de": "Zwei neue Protokolle mit festem Code aus der Unleashed-Firmware: Telcoma/Cardin EDGE (Tore) und Doorbell32 (Funk-Türklingeln). Zuhören erkennt auch Doorbell32 und hält Fernbedienungen, die es nicht dekodieren kann, nicht mehr für ein anderes Protokoll.",
+    "fr": "Deux nouveaux protocoles à code fixe issus du firmware Unleashed : Telcoma/Cardin EDGE (portails) et Doorbell32 (sonnettes sans fil). L'écoute reconnaît aussi Doorbell32 et ne confond plus les télécommandes qu'elle ne peut pas décoder avec un autre protocole.",
+    "it": "Due nuovi protocolli a codice fisso dal firmware Unleashed: Telcoma/Cardin EDGE (cancelli) e Doorbell32 (campanelli wireless). L'ascolto riconosce anche Doorbell32 e non scambia più i telecomandi che non può decodificare per un altro protocollo.",
+    "sv": "Två nya protokoll med fasta koder från Unleashed-firmwaren: Telcoma/Cardin EDGE (grindar) och Doorbell32 (trådlösa dörrklockor). Lyssna känner också igen Doorbell32 och misstar inte längre fjärrkontroller den inte kan avkoda för ett annat protokoll.",
+    "no": "To nye protokoller med faste koder fra Unleashed-firmwaren: Telcoma/Cardin EDGE (porter) og Doorbell32 (trådløse dørklokker). Lytt gjenkjenner også Doorbell32 og forveksler ikke lenger fjernkontroller den ikke kan dekode med en annen protokoll.",
+    "es": "Dos nuevos protocolos de código fijo del firmware Unleashed: Telcoma/Cardin EDGE (cancelas) y Doorbell32 (timbres inalámbricos). Escuchar también reconoce Doorbell32 y ya no confunde los mandos que no puede descodificar con otro protocolo.",
+    "da": "To nye protokoller med faste koder fra Unleashed-firmwaren: Telcoma/Cardin EDGE (porte) og Doorbell32 (trådløse dørklokker). Lyt genkender også Doorbell32 og forveksler ikke længere fjernbetjeninger, den ikke kan dekode, med en anden protokol.",
+    "ru": "Два новых протокола с фиксированным кодом из прошивки Unleashed: Telcoma/Cardin EDGE (ворота) и Doorbell32 (беспроводные дверные звонки). Прослушивание также распознаёт Doorbell32 и больше не принимает пульты, которые не может декодировать, за другой протокол.",
+    "pl": "Dwa nowe protokoły ze stałym kodem z firmware Unleashed: Telcoma/Cardin EDGE (bramy) i Doorbell32 (bezprzewodowe dzwonki do drzwi). Nasłuch rozpoznaje też Doorbell32 i nie myli już pilotów, których nie potrafi zdekodować, z innym protokołem.",
+    "ko": "Unleashed 펌웨어의 새 고정 코드 프로토콜 2종: Telcoma/Cardin EDGE(게이트), Doorbell32(무선 초인종). 수신 기능이 Doorbell32도 인식하며, 디코딩할 수 없는 리모컨을 더 이상 다른 프로토콜로 오인하지 않습니다.",
+    "ar": "بروتوكولان جديدان بالرمز الثابت من برنامج Unleashed الثابت: Telcoma/Cardin EDGE (البوابات) وDoorbell32 (أجراس الأبواب اللاسلكية). تتعرّف ميزة الاستماع أيضًا على Doorbell32 ولم تعد تخلط بين أجهزة التحكم التي لا يمكنها فك ترميزها وبروتوكول آخر."
   }
 }

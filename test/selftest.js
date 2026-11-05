@@ -45,6 +45,26 @@ assert.deepStrictEqual(came.slice(0, 4), [-47 * 320, 320, -640, 320]);
 const dooya = encode({ protocol: 'Dooya', bits: 40, key: '1' }).frame;
 assert.deepStrictEqual(dooya.slice(0, 3), [-(12 * 733 + 733), 13 * 366, -2 * 733]);
 
+// Doorbell32 (Unleashed): som Princeton, men 32 bit og pause 14 TE
+const door = encode({ protocol: 'Doorbell32', bits: 32, key: '5A3C91E7', te: 500 }).frame;
+assert.strictEqual(door.length, 66);
+assert.deepStrictEqual(door.slice(0, 4), [500, -1500, 1500, -500]); // 5 = 0101
+assert.deepStrictEqual(door.slice(-2), [500, -7000]);
+
+// Telcoma/Cardin EDGE (Unleashed): Manchester, halvbit 1270, 1 = høj+lav. Kanal 0 (porten):
+// 32 bit + høj stop-halvbit; andre kanaler: 33 bit (nøgle << 1) uden stop. Pause 4 TE.
+const tel = encode({ protocol: 'Telcoma/Cardin EDGE', bits: 32, key: 'FF309FC0' }).frame;
+assert.deepStrictEqual(tel.slice(0, 2), [1270, -1270]);
+assert.deepStrictEqual(tel.slice(-3), [-1270, 2540, -5080]); // ...0 0 + stop + pause
+const telCh = encode({ protocol: 'Telcoma/Cardin EDGE', bits: 32, key: 'FF309FC2' }).frame;
+assert.deepStrictEqual(telCh.slice(-3), [-1270, 1270, -5080]); // ...0 + ekstra 0, ingen stop
+assert.strictEqual(tel.reduce((a, v) => a + Math.abs(v), 0), (65 + 4) * 1270);
+assert.strictEqual(telCh.reduce((a, v) => a + Math.abs(v), 0), (66 + 4) * 1270);
+const telSub = parseSub(MARKISE_UD.replace('Princeton', 'Telcoma/Cardin EDGE').replace('Bit: 24', 'Bit: 32')
+  .replace('00 00 00 00 00 5A 3C 98', '00 00 00 00 FF 30 9F C0').replace('TE: 211\n', ''));
+assert.strictEqual(telSub.protocol, 'Telcoma/Cardin EDGE');
+assert.ok(plan(telSub, buildCatalog()).exact);
+
 // Rullende og ukendte protokoller afvises forståeligt
 assert.throws(() => encode({ protocol: 'KeeLoq', bits: 64, key: '1' }), /rullende/);
 assert.throws(() => encode({ protocol: 'Princeton', bits: 12, key: '1', te: 300 }), /24/);
@@ -136,6 +156,7 @@ setLanguage('da');
     { protocol: 'GateTX', bits: 24, key: '5A3C91' },
     { protocol: 'Intertechno_V3', bits: 32, key: '5A3C9100' },
     { protocol: 'SMC5326', bits: 25, key: '15A3C91', te: 300 },
+    { protocol: 'Doorbell32', bits: 32, key: '5A3C91E7', te: 515 },
   ];
   for (const want of cases) {
     const r = listen(want);
@@ -173,6 +194,22 @@ setLanguage('da');
   // Uden for Homeys modtageområde eller ukendt: ingen id'er.
   assert.deepStrictEqual(matchIds({ ...prince, frequency: 433420000 }, tables), []);
   assert.deepStrictEqual(matchIds({ protocol: 'Mastercode', bits: 36, key: '5A3C910AB', frequency: 433920000 }, tables), []);
+  // Protokoller, der ikke kan dekodes, må heller ikke blive til en anden (kortere) protokol – fx kopier
+  // af Holtek_HT12X i et ensartet Mastercode-frame, eller Roger (2:1) læst som SMC5326 (3:1) med frit TE.
+  for (const [protocol, bits] of [['Mastercode', 36], ['Roger', 28], ['Dooya', 40], ['Hormann HSM', 44], ['MegaCode', 24], ['Marantec24', 24]]) {
+    for (const key of ['0', ((1n << BigInt(bits)) - 1n).toString(16), '5A3C910AB5A'.slice(0, Math.ceil(bits / 4))]) {
+      assert.deepStrictEqual(matchIds({ protocol, bits, key, frequency: 433920000 }, tables), [], `${protocol} ${key}`);
+    }
+  }
+  // Hvert frame giver den rigtige kode – også i rx_b, hvor GateTX før blev læst som CAME en bit forskudt.
+  for (const want of [{ protocol: 'GateTX', bits: 24, key: '5A3C91' }, { protocol: 'Holtek', bits: 40, key: '5A3C9100AB' }]) {
+    for (const id of RX_IDS) {
+      for (const f of receive(encode(want).frame, rx[id].words)) {
+        const r = decodeFrame(f);
+        assert.deepStrictEqual(r && [r.protocol, r.key], [want.protocol, want.key], `${want.protocol} i ${id}`);
+      }
+    }
+  }
 
   const m = new Matcher();
   const target = { device: 'markise', id: 'b1' };

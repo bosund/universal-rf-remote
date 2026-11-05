@@ -7,7 +7,7 @@ Send 433 MHz codes captured with a [Flipper Zero](https://flipperzero.one) from 
 - **Remote control device** with a chosen name, icon and device type, and up to 16 labelled buttons.
 - **Listen:** Homey listens to your remote and decodes the code itself (18 protocols on 433.92 MHz, see below).
 - **Codes from Flipper Zero `.sub` files** (Key, RAW and BinRAW) or entered by hand, each with a *Test* button during pairing.
-- **32 fixed-code protocols** rebuilt from the decoded values the same way the Flipper does: Princeton, CAME, Nice FLO, Holtek, Holtek_HT12X, Linear, LinearDelta3, GateTX, Cham_Code, MegaCode, Ansonic, SMC5326, Phoenix_V2, Power Smart, BETT, Doitrand, Intertechno_V3, Clemsa, Dooya, Hormann HSM, Marantec, Marantec24, Mastercode, Legrand, Dickert_MAHS, Magellan, Feron, Nero Radio, Nero Sketch, Honeywell, Elplast and Roger.
+- **34 fixed-code protocols** rebuilt from the decoded values the same way the Flipper does: Princeton, CAME, Nice FLO, Holtek, Holtek_HT12X, Linear, LinearDelta3, GateTX, Cham_Code, MegaCode, Ansonic, SMC5326, Phoenix_V2, Power Smart, BETT, Doitrand, Intertechno_V3, Clemsa, Dooya, Hormann HSM, Marantec, Marantec24, Mastercode, Legrand, Dickert_MAHS, Magellan, Feron, Nero Radio, Nero Sketch, Honeywell, Elplast, Roger, Telcoma/Cardin EDGE and Doorbell32.
 - **Real device types:** give buttons a function (Up, Stop, Down, On, Off, Toggle) and the device gets Homey's own controls – window covering for awnings, blinds and curtains, garage door, or on/off for lights, sockets and fans. They work in the Homey app, in zones and with voice assistants. With a *travel time* in the device settings, Homey estimates the position and can move an awning or blind to e.g. 50 % (for awnings 100 % means fully out, for blinds and curtains fully open).
 - **Listen for the physical remote:** turn it on in the device settings, and Homey recognises the remote's own buttons. The flow card *[button] was pressed on the physical remote* starts, and Homey's controls follow along, so an awning's position stays right when it is moved with its own remote. Homey only receives while at least one device has the setting turned on.
 - **Flow cards:** *Press a button*, *A button is pressed*, *[button] was pressed on the physical remote* and *Send a 433 MHz code*.
@@ -18,7 +18,7 @@ Send 433 MHz codes captured with a [Flipper Zero](https://flipperzero.one) from 
 
 - Homey Pro (Early 2023) transmits on **433.00–433.99 MHz** with AM/OOK only. 868 MHz and FM/FSK recordings are not supported.
 - **Rolling-code remotes** (KeeLoq, Somfy RTS, Nice FloR-S, CAME Atomo, Security+ …) cannot be replayed. The app refuses them with an explanation.
-- **Listen** and **Listen for the physical remote** only hear 433.76–434.08 MHz (433.92 MHz remotes) and decodes Princeton, CAME, Nice FLO, Holtek, Holtek_HT12X, SMC5326, Legrand, GateTX, Intertechno_V3, Ansonic, Doitrand, Dickert_MAHS, Phoenix_V2, Magellan, Feron, Honeywell, Nero Sketch and Cham_Code. Homey's receiver drops the last pulse before a long pause, so protocols that keep a bit there (Linear, LinearDelta3, Roger, Dooya, Mastercode …) and Manchester-coded ones need a `.sub` file. Holtek_HT12X with TE 320 or 700 µs looks the same on air as CAME or Nice FLO and may be shown as those – the code works either way.
+- **Listen** and **Listen for the physical remote** only hear 433.76–434.08 MHz (433.92 MHz remotes) and decodes Princeton, CAME, Nice FLO, Holtek, Holtek_HT12X, SMC5326, Legrand, GateTX, Intertechno_V3, Ansonic, Doitrand, Dickert_MAHS, Phoenix_V2, Magellan, Feron, Honeywell, Nero Sketch, Cham_Code and Doorbell32. Homey's receiver drops the last pulse before a long pause, so protocols that keep a bit there (Linear, LinearDelta3, Roger, Dooya, Mastercode …) and Manchester-coded ones need a `.sub` file. Holtek_HT12X with TE 320 or 700 µs looks the same on air as CAME or Nice FLO and may be shown as those – the code works either way.
 - A frame can hold at most 256 pulses (a Homey radio limit). Long RAW recordings are reduced to one clean repetition automatically.
 
 ## Guide
@@ -103,7 +103,7 @@ Edit the pairing page in `views/remote.html` – the copies in `drivers/remote/p
 
 ## Credits and license
 
-The protocol encoders are ported from the Sub-GHz implementation in the [Flipper Zero firmware](https://github.com/flipperdevices/flipperzero-firmware) by Flipper Devices Inc. (GPL-3.0). Universal RF Remote is an independent app and is not affiliated with Flipper Devices.
+The protocol encoders are ported from the Sub-GHz implementation in the [Flipper Zero firmware](https://github.com/flipperdevices/flipperzero-firmware) by Flipper Devices Inc. (GPL-3.0); Telcoma/Cardin EDGE and Doorbell32 come from the [Unleashed firmware](https://github.com/DarkFlippers/unleashed-firmware) (GPL-3.0). Universal RF Remote is an independent app and is not affiliated with Flipper Devices.
 
 Licensed under the GNU General Public License v3.0 – see [LICENSE](LICENSE).
 
